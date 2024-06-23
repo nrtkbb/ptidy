@@ -143,27 +143,27 @@ fn main() {
         ));
         println!("{} to {}", photo, cp_path.display());
 
-        // let status = Command::new("cp")
-        //     .arg("-rp")
-        //     .arg(&photo.path)
-        //     .arg(&cp_path)
-        //     .status()
-        //     .expect("cp コマンドの実行に失敗しました。");
+        let status = Command::new("cp")
+            .arg("-rp")
+            .arg(&photo.path)
+            .arg(&cp_path)
+            .status()
+            .expect("cp コマンドの実行に失敗しました。");
 
-        // if !status.success() {
-        //     panic!("cpコマンドの実行に失敗したため終了します")
-        // }
+        if !status.success() {
+            panic!("cpコマンドの実行に失敗したため終了します")
+        }
 
-        // let cp_size = if let Ok(cp_size) = get_size(&cp_path) {
-        //     cp_size
-        // } else {
-        //     panic!("fs_extra::dir::get_size for {}", cp_path.display());
-        // };
-        // if cp_size != photo.size {
-        //     panic!("source:{}, to:{} was not eq. cp_path:{}",
-        //         photo.size, cp_size, cp_path.display()
-        //     );
-        // }
+        let cp_size = if let Ok(cp_size) = get_size(&cp_path) {
+            cp_size
+        } else {
+            panic!("fs_extra::dir::get_size for {}", cp_path.display());
+        };
+        if cp_size != photo.size {
+            panic!("source:{}, to:{} was not eq. cp_path:{}",
+                photo.size, cp_size, cp_path.display()
+            );
+        }
         println!("ok! {} to {}", photo, cp_path.display());
     }
 }
